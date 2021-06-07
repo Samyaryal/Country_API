@@ -1,20 +1,15 @@
 import React from 'react';
 import './App.css';
-import useCountry from './custom-hooks/useCountry';
+import TableData from './components/Table';
 
 function App() {
   
-  const {data: datas, error} = useCountry(`all`);
-  console.log("here is the data", datas)
-
-  if (error) throw error;
-
   return (
     <div>
-      Datas are here:
+      <TableData/>
+
     </div>
- 
-  );
+  )
 }
 
 export default App;

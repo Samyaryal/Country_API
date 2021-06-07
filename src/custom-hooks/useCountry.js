@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react';
 const baseurl = "https://restcountries.eu/rest/v2/";
 
 function useCountry (url){
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect (() => {
     (async function datas(){
