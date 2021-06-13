@@ -1,48 +1,52 @@
-import React from 'react';
+import React, { useContext } from "react";
 import TableBody from '@material-ui/core/TableBody';
-import StyledTableCell from './StyledTablecell';
-import StyledTableRow from './StyledTablerow';
-
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import useCountry from '../../custom-hooks/useCountry';
+import CountryPage from '../CountryPage';
+import { Link } from 'react-router-dom';
+import ThemeContext from '../Context/ThemeContext';
+import { useHistory } from 'react-router-dom';
 
 function TableBodyData() {
+  const countryData = useCountry(`all`);
+  const history = useHistory();
+  const { theme } = useContext(ThemeContext);
 
-  const { data, error } = useCountry(`all`);
-  console.log("Here is the data in tablebody", data)
-
-  if (error) throw error;
+  // const handleCountryClick = () => {
+  //   history.push(`/${name}`);
+  // };
 
   return (
     <TableBody>
       {
-        data.map((country) => {
+        countryData.map((country) => {
           const { name, flag, population, region, languages } = country
           return (
-            <StyledTableRow key={name} className="table-data">
-              <StyledTableCell component="th" scope="row">
+            <TableRow key={name} className="table-data">
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center" component="th" scope="row">
                 <img
                   alt=""
                   src={flag}
                   height="150"
                   width="270"
                 />
-              </StyledTableCell>
-              <StyledTableCell align="right" style={{ color: "purple" }} >{name}</StyledTableCell>
-              <StyledTableCell align="right">{population}</StyledTableCell>
-              <StyledTableCell align="right">{region}</StyledTableCell>
-              <StyledTableCell align="right">
+              </TableCell>
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: "darkblue" }} align="center">
+                <Link to={`${name}`}>{name}</Link>
+              </TableCell>
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">{population}</TableCell>
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">{region}</TableCell>
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">
                 {languages.map(lang => <li>{lang.name}</li>)}
-              </StyledTableCell>
-              {/* <StyledTableCell>
-                  <button> BUY</button>
-                </StyledTableCell> */}
-            </StyledTableRow>
-
+              </TableCell>
+              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }}>
+                <button> BUY</button>
+              </TableCell>
+            </TableRow>
           )
-
         }
         )}
-
     </TableBody>
   )
 }

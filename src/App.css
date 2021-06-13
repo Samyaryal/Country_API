@@ -6,7 +6,15 @@ li {
 .table-head{
   height: 90px;
 }
-.table-data{
-  font-size: 90px;
-  text-align: center;
+
+.infopage{
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1em;
+  padding: 30px;
+  box-shadow: 0px 5px 20px rgb(71, 71, 71);
+  background: white;
+  width: 25%;
+  margin: auto;
+
 }

@@ -1,25 +1,17 @@
-import {useState, useEffect} from 'react';
-const baseurl = "https://restcountries.eu/rest/v2/";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { itemsFetchData } from '../redux/actions/actions';
 
-function useCountry (url){
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
+const useCountry = (url) => {
+  const dispatch = useDispatch();
+  const countryData = useSelector((state) => state.reducerCountry.countries);
+  // const url = `https://restcountries.eu/rest/v2/all`;
+  const baseURL = `https://restcountries.eu/rest/v2/`
 
-  useEffect (() => {
-    (async function datas(){
-      try{
-        const country = await fetch(baseurl+ url);
-        const response = await country.json();
-        setData(response);
-      }
-      catch(error){
-        setError(error);
-      }
-    })()
-  }, [url])
+  useEffect(() => {
+    dispatch(itemsFetchData(baseURL + url));
+  }, [dispatch, url]);
 
-  return {data, error};
-}
-
-
+  return countryData;
+};
 export default useCountry;
