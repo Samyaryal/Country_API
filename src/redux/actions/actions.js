@@ -3,6 +3,7 @@ export const ITEMS_IS_LOADING = "ITEMS_IS_LOADING";
 export const ITEMS_FETCH_DATA_SUCCESS = "ITEMS_FETCH_DATA_SUCCESS";
 export const ADDING_TO_CART = "ADDING_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const SEARCH_COUNTRY = "SEARCH_COUNTRY";
 
 export function itemsHasErrored(error) {
   return {
@@ -16,10 +17,10 @@ export function itemsIsLoading(loading) {
       payload: loading
   };
 }
-export function itemsFetchDataSuccess(countries) {
+export function itemsFetchDataSuccess(data) {
   return {
       type: 'ITEMS_FETCH_DATA_SUCCESS',
-      payload: countries
+      payload: data
   };
 }
 
@@ -29,7 +30,7 @@ export function itemsFetchData (url) {
       dispatch(itemsIsLoading());
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error('Something weent wrong');
+        throw new Error('Something went wrong');
       }
       const data = await response.json();
       dispatch(itemsFetchDataSuccess(data));
@@ -39,6 +40,13 @@ export function itemsFetchData (url) {
   };
 };
 
+export function searchCountry (value){
+ 
+  return {
+    type: "SEARCH_COUNTRY",
+    payload: value
+  }
+} 
 
 export function addToCart (country){
   return {
@@ -48,8 +56,10 @@ export function addToCart (country){
 }
 
 export function removeFromCart (country){
+  console.log("country arr", country)
   return {
     type: "REMOVE_FROM_CART",
     payload: country
   }
 }
+

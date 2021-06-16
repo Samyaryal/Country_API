@@ -10,7 +10,7 @@ const Button = () => {
   
   return (
     <div>
-      <button onClick = {toggleContext}>Theme Change</button>
+      <button className = "button" onClick = {toggleContext}>Theme Change</button>
     </div>
   )
 }

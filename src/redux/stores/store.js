@@ -2,11 +2,18 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 
+// const saveToLocalStorage = localStorage.setItem("SavedList");
+
+
 const initialState = {
-  countryReducer: {
+  reducerCountry: {
     countries: [],
     error: '',
-    loading: false
+    loading: false,
+    filteredCountry:[]
+  },
+  cartReducer:{
+    cartItems: [],
   }
 }
 

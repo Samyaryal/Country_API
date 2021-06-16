@@ -9,14 +9,15 @@ function TableHeadData() {
   return (
     <TableHead style={theme}>
       <TableRow  style={{ background: theme.background, color: theme.color }} className="table-head" >
-        <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }}  align ="center" >FLAG </TableCell>
+        <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center" >FLAG </TableCell>
         <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center">NAME</TableCell>
         <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center">POPULATION</TableCell>
         <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center">REGION</TableCell>
         <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center">LANGUAGE</TableCell>
-        <TableCell align ="center"></TableCell>
+        <TableCell style={{fontSize:"18px", background: theme.background, color: theme.color }} align ="center"> BUY</TableCell>
       </TableRow>
     </TableHead>
+
   )
 }
 

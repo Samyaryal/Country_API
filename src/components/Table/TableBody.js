@@ -1,54 +1,64 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
+import {useSelector } from 'react-redux';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import useCountry from '../../custom-hooks/useCountry';
-import CountryPage from '../CountryPage';
 import { Link } from 'react-router-dom';
 import ThemeContext from '../Context/ThemeContext';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {addToCart} from '../../redux/actions/actions';
 
 function TableBodyData() {
-  const countryData = useCountry(`all`);
-  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { filteredCountry } = useSelector((state) => state.reducerCountry)
   const { theme } = useContext(ThemeContext);
 
-  // const handleCountryClick = () => {
-  //   history.push(`/${name}`);
-  // };
+  const { countries, error, loading } = useCountry();
+  console.log("filteredCountry", countries)
+  if (loading) return "Data is loading!"
+  if (error) return "Something went wrong"
 
-  return (
-    <TableBody>
-      {
-        countryData.map((country) => {
-          const { name, flag, population, region, languages } = country
-          return (
-            <TableRow key={name} className="table-data">
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center" component="th" scope="row">
-                <img
-                  alt=""
-                  src={flag}
-                  height="150"
-                  width="270"
-                />
-              </TableCell>
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: "darkblue" }} align="center">
-                <Link to={`${name}`}>{name}</Link>
-              </TableCell>
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">{population}</TableCell>
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">{region}</TableCell>
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }} align="center">
-                {languages.map(lang => <li>{lang.name}</li>)}
-              </TableCell>
-              <TableCell style={{ fontSize: "18px", background: theme.background, color: theme.color }}>
-                <button> BUY</button>
-              </TableCell>
-            </TableRow>
-          )
-        }
-        )}
+ 
+  
+  // if (filteredCountry.length === 0 ? <TableBody /> : filteredCountry)
+    return (
+      <>
+      <TableBody>
+        {
+          countries.map((country) => {
+            const { name, flag, population, region, languages } = country
+            return (
+              <TableRow key={name} className="table-data">
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center" component="th" scope="row">
+                  <img
+                    alt=""
+                    src={flag}
+                    height="110"
+                    width="200"
+                  />
+                </TableCell>
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center">
+                  <Link style={{color: theme.color}}  className ="link" to={`${name}`}>{name}</Link>
+                </TableCell>
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center">{population}</TableCell>
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center">{region}</TableCell>
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center">
+                  {languages.map(lang =><li>{lang.name}</li>)}
+                </TableCell>
+
+                <TableCell style={{ background: theme.background, color: theme.color }} align="center">
+                  <button onClick = {() => (dispatch(addToCart(country)))} >Add To Cart</button>
+                </TableCell>
+              </TableRow>
+            )
+          }
+          )}
+            
     </TableBody>
-  )
-}
+    </>
+    )
+  }
 
-export default TableBodyData;
+  export default TableBodyData;

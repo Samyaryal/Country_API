@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -8,6 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useCountry from '../custom-hooks/useCountry';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,18 +27,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function  CountryPage() {
-  
-  const history = useHistory();
-  const gotoHome = () => {
-		history.push('/');
-  };
-  
-  const { countryName } = useParams();
-  const countryData =  useCountry(`name/${countryName}`);
-
-  console.log("COuntyyyyy", countryData)
-
   const classes = useStyles();
+
+  const { countryName } = useParams();
+  
+  const {countries:country } = useCountry(`name/${countryName}`)
+
+  const history = useHistory();
+
+  const getBack = () =>{
+    history.push('/')
+  }
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -44,9 +46,12 @@ export default function  CountryPage() {
   };
 
   return (
+
     <div className ="infopage">
-     <div><h1> {countryData[0].name} </h1></div>
-     <div><img src={`${countryData[0].flag}`} height="200px" width="320px" alt="country flag"></img></div>
+    {country.length !==0 && (
+      <>
+     <div><h1> {country[0].name} </h1></div>
+     <div><img src={`${country[0].flag}`} height="200px" width="320px" alt="country flag"></img></div>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -57,8 +62,8 @@ export default function  CountryPage() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          {countryData[0].altSpellings.length > 0
-					? countryData[0].altSpellings.map((item) => <li>{item}</li>)
+          {country[0].altSpellings.length > 0
+					? country[0].altSpellings.map((item) => <li>{item}</li>)
 					: 'No data on this'}
           </Typography>
         </AccordionDetails>
@@ -73,7 +78,7 @@ export default function  CountryPage() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          {(countryData[0].region)}
+          {(country[0].region)}
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -87,8 +92,8 @@ export default function  CountryPage() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          {countryData[0].borders.length > 0
-					? countryData[0].borders.map((item) => <li>{item}</li>)
+          {country[0].borders.length > 0
+					? country[0].borders.map((item) => <li>{item}</li>)
 					: 'No data on this'}
           </Typography>
         </AccordionDetails>
@@ -104,7 +109,7 @@ export default function  CountryPage() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          {countryData[0].currencies.length > 0 ? (countryData[0].currencies[0].name) : 'No data on this'}
+          {country[0].currencies.length > 0 ? (country[0].currencies[0].name) : 'No data on this'}
           </Typography>
         
         </AccordionDetails>
@@ -119,16 +124,18 @@ export default function  CountryPage() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          {countryData[0].languages.length > 0
-					? (countryData[0].languages.map(lang=><li>{lang.name}</li>))
+          {country[0].languages.length > 0
+					? (country[0].languages.map(lang=><li>{lang.name}</li>))
           : 'No data on this'
           }
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <button  onClick={() => gotoHome()} variant="contained">
+      <button onClick={() => getBack()} variant="contained">
 				Get Back
 			</button>
+      </>
+      )}
     </div>
   );
 }
