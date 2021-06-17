@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
 import { useSelector} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-//import EmailIcon from '@material-ui/icons/Email';
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import IconButton from '@material-ui/core/IconButton';
 import CartItem from './CartItem';

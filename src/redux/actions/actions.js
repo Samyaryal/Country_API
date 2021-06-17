@@ -3,7 +3,7 @@ export const ITEMS_IS_LOADING = "ITEMS_IS_LOADING";
 export const ITEMS_FETCH_DATA_SUCCESS = "ITEMS_FETCH_DATA_SUCCESS";
 export const ADDING_TO_CART = "ADDING_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-export const SEARCH_COUNTRY = "SEARCH_COUNTRY";
+export const SEARCH_COUNTRY_BYNAME = "SEARCH_COUNTRY_BYNAME";
 
 export function itemsHasErrored(error) {
   return {
@@ -41,9 +41,8 @@ export function itemsFetchData (url) {
 };
 
 export function searchCountry (value){
- 
   return {
-    type: "SEARCH_COUNTRY",
+    type: "SEARCH_COUNTRY_BYNAME",
     payload: value
   }
 } 
@@ -56,7 +55,6 @@ export function addToCart (country){
 }
 
 export function removeFromCart (country){
-  console.log("country arr", country)
   return {
     type: "REMOVE_FROM_CART",
     payload: country

@@ -12,18 +12,21 @@ function TableBodyData() {
   const dispatch = useDispatch();
  
   const { theme } = useContext(ThemeContext);
-  const {filteredCountry} = useCountry()
+  //const {filteredCountry} = useCountry()
 
-  const { countries, error, loading } = useCountry();
+  const {  filteredCountry: countries, error, loading } = useCountry();
 
   if (loading) return "Data is loading!"
   if (error) return "Something went wrong"
 
+  const addCountryToFavorite = (country) => dispatch(addToCart(country));
+  
+
   //  if (filteredCountry.length === 0 ? countries: filteredCountry)
     return (
-      <>
+
       <TableBody>
-        {(filteredCountry.length === 0) ?
+        {
          countries.map((country) => {
             const { name, flag, population, region, languages } = country
             return (
@@ -46,15 +49,13 @@ function TableBodyData() {
                 </TableCell>
 
                 <TableCell style={{ background: theme.background, color: theme.color }} align="center">
-                  <button onClick = {() => (dispatch(addToCart(country)))} >Add To Cart</button>
+                  <button onClick = {() => addCountryToFavorite(country)} >Add To Cart</button>
                 </TableCell>
               </TableRow>
             )
           }
-          ) : filteredCountry }
-            
+          )}      
     </TableBody>
-    </>
     )
   }
 

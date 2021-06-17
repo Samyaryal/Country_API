@@ -8,17 +8,19 @@ import Nav from './components/Headers/Nav';
 
 
 function App() {
+  
 
   const [theme, setTheme] = useState(themes.dark)
   const context = { theme, setTheme };
   return (
     <div>
       <BrowserRouter>
+      
         <Switch>
           <Route exact path="/">
             <ThemeContext.Provider value={context}>
-              <Nav />
-              <TableData />
+           <Nav />
+            <TableData />
             </ThemeContext.Provider>
           </Route>
           <Route exact path="/:countryName" component={Countrypage} >

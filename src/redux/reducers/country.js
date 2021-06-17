@@ -1,4 +1,9 @@
-import { ITEMS_HAS_ERRORED,  ITEMS_IS_LOADING, ITEMS_FETCH_DATA_SUCCESS, SEARCH_COUNTRY} from '../actions/actions';
+import { 
+  ITEMS_HAS_ERRORED,  
+  ITEMS_IS_LOADING, 
+  ITEMS_FETCH_DATA_SUCCESS, 
+  SEARCH_COUNTRY_BYNAME,
+} from '../actions/actions';
 
 const initialState ={
   countries: [],
@@ -12,10 +17,7 @@ const reducerCountry = (state=initialState, action) => {
     case ITEMS_IS_LOADING: 
     return {
       ...state,
-      loading: true,
-      error: ' ',
-      countries: [],
-      filteredCountry:[] 
+      loading: true
     };
     
     case  ITEMS_FETCH_DATA_SUCCESS:
@@ -24,7 +26,7 @@ const reducerCountry = (state=initialState, action) => {
       countries: action.payload,
       loading: false,
       error: '',
-      filteredCountries: action.payload
+      filteredCountry: action.payload
     }
     case ITEMS_HAS_ERRORED:
     return{
@@ -32,16 +34,9 @@ const reducerCountry = (state=initialState, action) => {
       countries: [],
       error: action.payload,
       loading: false,
-      filteredCountries: []
     }
-    
-    case SEARCH_COUNTRY:
-    // console.log("SEEARCH_ =>", action.payload)
-    if (action.payload === null ) {
-      return {...state, filteredCountry: state.countries}
-    }
+    case SEARCH_COUNTRY_BYNAME:
     const searchItem =  state.countries.filter((country) => country.name.toLowerCase().startsWith(action.payload.toLowerCase()))
-    console.log("SearchItem", searchItem)
     return {
       ...state, 
       filteredCountry: searchItem

@@ -30,7 +30,8 @@ export default function  CountryPage() {
   const history = useHistory();
 
   const { countryName } = useParams();
-  const { countries: country } = useCountry(`name/${countryName}`)
+  const { countries: country } = useCountry(countryName)
+  //const { countries: country } = useCountry(`name/${countryName}`)
 
   const getBack = () =>{
     history.push('/')
