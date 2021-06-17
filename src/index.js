@@ -9,7 +9,7 @@ import makeStore from './redux/stores/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store = {makeStore()}>
+    <Provider store = {makeStore}>
     <App />
     </Provider>
   </React.StrictMode>,

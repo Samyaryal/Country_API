@@ -9,7 +9,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useCountry from '../custom-hooks/useCountry';
-import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function  CountryPage() {
   const classes = useStyles();
+  const history = useHistory();
 
   const { countryName } = useParams();
-  
-  const {countries:country } = useCountry(`name/${countryName}`)
-
-  const history = useHistory();
+  const { countries: country } = useCountry(`name/${countryName}`)
 
   const getBack = () =>{
     history.push('/')
@@ -58,7 +55,7 @@ export default function  CountryPage() {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography className={classes.heading}>Other Names</Typography>
+        <Typography className={classes.heading}>Other Names</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

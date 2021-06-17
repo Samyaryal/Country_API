@@ -12,7 +12,10 @@ const reducerCountry = (state=initialState, action) => {
     case ITEMS_IS_LOADING: 
     return {
       ...state,
-      loading: true
+      loading: true,
+      error: ' ',
+      countries: [],
+      filteredCountry:[] 
     };
     
     case  ITEMS_FETCH_DATA_SUCCESS:
@@ -20,6 +23,8 @@ const reducerCountry = (state=initialState, action) => {
       ...state,
       countries: action.payload,
       loading: false,
+      error: '',
+      filteredCountries: action.payload
     }
     case ITEMS_HAS_ERRORED:
     return{
@@ -27,15 +32,16 @@ const reducerCountry = (state=initialState, action) => {
       countries: [],
       error: action.payload,
       loading: false,
+      filteredCountries: []
     }
-    case SEARCH_COUNTRY:
-
-    // console.log("SEEARCH_ =>", action.payload)
-    // if (action.payload === ' ') {
-    //   return {filteredCountry : state.countries}
-    // }
     
+    case SEARCH_COUNTRY:
+    // console.log("SEEARCH_ =>", action.payload)
+    if (action.payload === null ) {
+      return {...state, filteredCountry: state.countries}
+    }
     const searchItem =  state.countries.filter((country) => country.name.toLowerCase().startsWith(action.payload.toLowerCase()))
+    console.log("SearchItem", searchItem)
     return {
       ...state, 
       filteredCountry: searchItem

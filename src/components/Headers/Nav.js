@@ -44,7 +44,7 @@ const Nav = () => {
           <Button />
             <div className={classes.favcontainer}>
               <IconButton onClick={openDrawer}>
-                <ShoppingCartIcon className="icon"/>
+                <ShoppingCartIcon fontSize='large' className="icon"/>
               </IconButton>
               <span className={classes.cartCount}>
                 {cartItems.length > 0 && cartItems.length}

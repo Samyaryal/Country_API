@@ -3,7 +3,25 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 
 // const saveToLocalStorage = localStorage.setItem("SavedList");
+const toStorage = (state) => {
+  try {
+    const toSave = JSON.stringify(state);
+    localStorage.setItem("key", toSave);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+const fromStorage = () => {
+  try {
+    const savedItem = localStorage.getItem("key");
+    if (savedItem  === null) return [];
+    return JSON.parse(savedItem );
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
 
 const initialState = {
   reducerCountry: {
@@ -13,11 +31,10 @@ const initialState = {
     filteredCountry:[]
   },
   cartReducer:{
-    cartItems: [],
+    cartItems: fromStorage(),
   }
 }
 
-const makeStore = () => {
   const middlewares = [thunk];
   let composeEnhancers = compose;
 
@@ -28,13 +45,14 @@ const makeStore = () => {
       });
     }
   }
-  const store = createStore(
+  const makeStore = createStore(
     rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   );
-  return store;
-};
+  
+makeStore.subscribe(() => toStorage(makeStore.getState().cartReducer.cartItems));
 
 export default makeStore;
+
 

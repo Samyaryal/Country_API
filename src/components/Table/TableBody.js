@@ -1,5 +1,4 @@
 import React, { useContext} from "react";
-import {useSelector } from 'react-redux';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -11,23 +10,21 @@ import {addToCart} from '../../redux/actions/actions';
 
 function TableBodyData() {
   const dispatch = useDispatch();
-
-  const { filteredCountry } = useSelector((state) => state.reducerCountry)
+ 
   const { theme } = useContext(ThemeContext);
+  const {filteredCountry} = useCountry()
 
   const { countries, error, loading } = useCountry();
-  console.log("filteredCountry", countries)
+
   if (loading) return "Data is loading!"
   if (error) return "Something went wrong"
 
- 
-  
-  // if (filteredCountry.length === 0 ? <TableBody /> : filteredCountry)
+  //  if (filteredCountry.length === 0 ? countries: filteredCountry)
     return (
       <>
       <TableBody>
-        {
-          countries.map((country) => {
+        {(filteredCountry.length === 0) ?
+         countries.map((country) => {
             const { name, flag, population, region, languages } = country
             return (
               <TableRow key={name} className="table-data">
@@ -54,7 +51,7 @@ function TableBodyData() {
               </TableRow>
             )
           }
-          )}
+          ) : filteredCountry }
             
     </TableBody>
     </>
