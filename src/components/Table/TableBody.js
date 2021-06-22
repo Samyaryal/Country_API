@@ -12,7 +12,6 @@ function TableBodyData() {
   const dispatch = useDispatch();
  
   const { theme } = useContext(ThemeContext);
-  //const {filteredCountry} = useCountry()
 
   const {  filteredCountry: countries, error, loading } = useCountry();
 
@@ -20,9 +19,7 @@ function TableBodyData() {
   if (error) return "Something went wrong"
 
   const addCountryToFavorite = (country) => dispatch(addToCart(country));
-  
 
-  //  if (filteredCountry.length === 0 ? countries: filteredCountry)
     return (
 
       <TableBody>
