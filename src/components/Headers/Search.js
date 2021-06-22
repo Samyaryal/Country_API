@@ -4,51 +4,33 @@ import {  searchCountry } from '../../redux/actions/actions';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('')
-  const [debounce, setDebounce] = useState('');
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebounce(search);
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [search]);
-
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedValue, setDebouncedValue ] = useState(' ');
   //dispatch(searchCountry(search))
 
   useEffect(() => {
-    dispatch(searchCountry(search))
-  }, [dispatch, debounce])
+    const handler = setTimeout(() => {
+      setDebouncedValue(searchTerm);
+    }, 2000);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
 
-
-  
-
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setDebounce(search);
-  //   }, 1000);
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [search]);
-
-  // useEffect(() => {
-  //   dispatch(searchCountry(debounce));
-  // }, [dispatch, debounce]);
+  useEffect(() => {
+    dispatch(searchCountry(searchTerm));
+  }, [debouncedValue, dispatch]);
 
   const handleInputChange = (event) => {
-    setSearch(event.target.value);
+    setSearchTerm(event.target.value);
   };
+
 
   return (
     <div>
       <input
       className = "input-field"
-      value = {search}
+      value = {searchTerm}
       placeholder="search"
       type="text"
       onChange ={handleInputChange}
